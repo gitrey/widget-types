@@ -1,0 +1,14 @@
+{
+  "name": "@heidihealth/widget-types",
+  "private": false,
+  "version": "1.0.8",
+  "description": "",
+  "author": "",
+  "license": "Apache-2.0",
+  "main": "",
+  "types": "index.d.ts",
+  "exports": {
+    ".": "./index.d.ts",
+    "./types": "./types.d.ts"
+  }
+}
