@@ -6,6 +6,12 @@ import { type HeidiControl, type HeidiExtensionControl, type HeidiOptions } from
  * @description Main class for initializing and managing the Heidi widget. Ensures singleton pattern implementation.
  */
 export declare class Heidi extends HeidiController {
+    /**
+     * Creates an instance of the Heidi widget.
+     * 
+     * @constructor
+     * @param {HeidiOptions} [options] - Initial configuration options to customize the Heidi widget instance.
+     */
     constructor(options?: HeidiOptions);
     /**
      * @method getOptions

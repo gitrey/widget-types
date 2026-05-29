@@ -1,22 +1,46 @@
 import { Heidi } from './index';
 import { type HeidiContext, type HeidiControl, type HeidiDocument, type HeidiExtensionControl, type HeidiExtensionMessage, type HeidiLiveTranscription, type HeidiNote, type HeidiOpenParams, type HeidiOptions, type HeidiRecordingStatus, type HeidiSectionalData, type HeidiState, type HeidiWidgetMessage, type PatientInfo, type SessionDetails, type Template } from './types';
 export declare class HeidiController {
+    /** The singleton instance of the Heidi class. */
     static instance: Heidi;
+    /** The base URL of the Heidi widget application. */
     static baseUrl: string;
+    /** The target HTML element where the Heidi widget is rendered/attached. */
     static target: HTMLElement;
+    /** The active clinical note template. */
     static template: Template | null;
+    /** The currently selected patient demographics. */
     static patient: PatientInfo | null;
+    /** The current active session ID. */
     static sessionId: string | null;
+    /** The active EHR Appointment ID linked with the session. */
     static ehrApptId: string | null;
+    /** Flag to control if a new session should be started on load. */
     static startNewSession: boolean | null;
+    /** Additional contextual information or notes for the session. */
     static context: string | null;
+    /** The library/widget version string. */
     static version: string;
+    /** The configuration options initialized with the Heidi instance. */
     static options: HeidiOptions | undefined;
+    /** Internal control bridge for communicating commands to the widget frame. */
     static control: HeidiControl | null;
+    /** The operational state of the Heidi controller instance. */
     static state: HeidiState;
+    /** Extension control interface for browser extension specific operations. */
     static extensionControl: HeidiExtensionControl | null;
+    /**
+     * Initializes the Heidi controller, establishing communication hooks and setup states.
+     * @returns {Promise<void>} Resolves when the initial setup is complete.
+     */
     static init(): Promise<void>;
+    /**
+     * Signals that the core application container/frame has completed loading and is ready.
+     */
     static appReady(): void;
+    /**
+     * Completely destroys the Heidi controller context, cleaning up instance fields and DOM bindings.
+     */
     static appDestroy(): void;
     /**
      * Opens Heidi and starts a new session.
@@ -68,6 +92,10 @@ export declare class HeidiController {
      * @param sessionId - a valid Heidi sessionId.
      */
     static setSessionId(sessionId: string): void;
+    /**
+     * Sets the session details including appointment ID and creation time.
+     * @param {SessionDetails} sessionDetails - The details of the clinical session.
+     */
     static setSessionDetails(sessionDetails: SessionDetails): void;
     /**
      * Update the current sessionId used by Heidi.
@@ -78,6 +106,13 @@ export declare class HeidiController {
      * Sets the widget to start a new session on load.
      */
     static setStartNewSession(startNewSession: boolean): void;
+    /**
+     * Programmatically disables or enables the push note button, with an optional error/reason payload.
+     * @param {boolean} isPushNoteDisabled - If true, the push note button is disabled in the widget UI.
+     * @param {object} [data] - Optional metadata payload containing context details.
+     * @param {string} data.reason - The reason explaining why pushing notes is disabled.
+     * @param {'PushNoteFailed'} [data.type] - The categorical type of disable action (e.g. failure notification).
+     */
     static setIsPushNoteDisabled(isPushNoteDisabled: boolean, data?: {
         reason: string;
         type?: 'PushNoteFailed';
@@ -173,6 +208,13 @@ export declare class HeidiController {
      * @param callback
      */
     static onTriggerUploadAttachment(callback: () => void): void;
+    /**
+     * Triggers a toast notification dialog inside the Heidi widget.
+     * @param {object} params - The toast configuration parameters.
+     * @param {string} params.title - The headline/title text for the toast notification.
+     * @param {string} [params.description] - Optional sub-description text detail.
+     * @param {'success' | 'error' | 'info'} params.type - The status type of the toast banner, determining its color theme.
+     */
     static toast({ title, description, type, }: {
         title: string;
         description?: string;
