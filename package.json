@@ -10,5 +10,12 @@
   "exports": {
     ".": "./index.d.ts",
     "./types": "./types.d.ts"
+  },
+  "scripts": {
+    "test": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0",
+    "zod": "^3.0.0"
   }
 }
