@@ -1,7 +1,7 @@
-import { Heidi } from './index';
-import { type HeidiContext, type HeidiControl, type HeidiDocument, type HeidiExtensionControl, type HeidiExtensionMessage, type HeidiLiveTranscription, type HeidiNote, type HeidiOpenParams, type HeidiOptions, type HeidiRecordingStatus, type HeidiSectionalData, type HeidiState, type HeidiWidgetMessage, type PatientInfo, type SessionDetails, type Template } from './types';
-export declare class HeidiController {
-    static instance: Heidi;
+import { FDI } from './index';
+import { type FDIContext, type FDIControl, type FDIDocument, type FDIExtensionControl, type FDIExtensionMessage, type FDILiveTranscription, type FDINote, type FDIOpenParams, type FDIOptions, type FDIRecordingStatus, type FDISectionalData, type FDIState, type FDIWidgetMessage, type PatientInfo, type SessionDetails, type Template } from './types';
+export declare class FDIController {
+    static instance: FDI;
     static baseUrl: string;
     static target: HTMLElement;
     static template: Template | null;
@@ -11,21 +11,21 @@ export declare class HeidiController {
     static startNewSession: boolean | null;
     static context: string | null;
     static version: string;
-    static options: HeidiOptions | undefined;
-    static control: HeidiControl | null;
-    static state: HeidiState;
-    static extensionControl: HeidiExtensionControl | null;
+    static options: FDIOptions | undefined;
+    static control: FDIControl | null;
+    static state: FDIState;
+    static extensionControl: FDIExtensionControl | null;
     static init(): Promise<void>;
     static appReady(): void;
     static appDestroy(): void;
     /**
-     * Opens Heidi and starts a new session.
-     * @param params - open Heidi with a set custom template, patient information and a sessionId.
+     * Opens FDI and starts a new session.
+     * @param params - open FDI with a set custom template, patient information and a sessionId.
      */
-    static open(params?: HeidiOpenParams): Promise<void>;
+    static open(params?: FDIOpenParams): Promise<void>;
     /**
-     * Closes Heidi.
-     * @param params - close Heidi with a set of options.
+     * Closes FDI.
+     * @param params - close FDI with a set of options.
      * @param params.keepSession - whether to keep the current session open.
      * @param params.force - whether to skip the confirmation modal.
      */
@@ -34,43 +34,43 @@ export declare class HeidiController {
         force?: boolean;
     }): void;
     /**
-     * Triggered when a user resize the Heidi widget.
-     * @param callback - a function called when the user resize the Heidi widget.
+     * Triggered when a user resize the FDI widget.
+     * @param callback - a function called when the user resize the FDI widget.
      */
     static onResize(callback: (expanded: boolean) => void): void;
     /**
-     * Triggered when a user clicks `Push Document` in the Heidi widget.
-     * @param callback - a function called when the user chooses to push document from the Heidi library to your EHR.
+     * Triggered when a user clicks `Push Document` in the FDI widget.
+     * @param callback - a function called when the user chooses to push document from the FDI library to your EHR.
      */
-    static onPushDocument(callback: (heidiDocument: HeidiDocument) => void): void;
+    static onPushDocument(callback: (fdiDocument: FDIDocument) => void): void;
     /**
-     * Triggered when a user chooses to push notes from the Heidi library to your EHR.
-     * @param callback - a function called when the user chooses to push notes from the Heidi library to your EHR.
+     * Triggered when a user chooses to push notes from the FDI library to your EHR.
+     * @param callback - a function called when the user chooses to push notes from the FDI library to your EHR.
      */
-    static onPushData(callback: (heidiNote: HeidiNote) => void): void;
+    static onPushData(callback: (fdiNote: FDINote) => void): void;
     /**
-     * Triggered when a new Heidi Session is created.
-     * @param callback - a function called when a new Heidi Session is created.
+     * Triggered when a new FDI Session is created.
+     * @param callback - a function called when a new FDI Session is created.
      */
     static onSessionStarted(callback: (sessionId: string) => void): void;
     /**
-     * Triggered when the current Heidi token expires.
-     * @param callback - a function called when the current Heidi token expires.
+     * Triggered when the current FDI token expires.
+     * @param callback - a function called when the current FDI token expires.
      */
     static onTokenExpired(callback: () => void): void;
     /**
-     * Update the current token used by Heidi.
-     * @param token - a valid Heidi JWT token.
+     * Update the current token used by FDI.
+     * @param token - a valid FDI JWT token.
      */
     static setToken(token: string): void;
     /**
-     * Update the current sessionId used by Heidi.
-     * @param sessionId - a valid Heidi sessionId.
+     * Update the current sessionId used by FDI.
+     * @param sessionId - a valid FDI sessionId.
      */
     static setSessionId(sessionId: string): void;
     static setSessionDetails(sessionDetails: SessionDetails): void;
     /**
-     * Update the current sessionId used by Heidi.
+     * Update the current sessionId used by FDI.
      * @param ehrApptId - a valid EHR Appointment ID.
      */
     static setSessionByEhrApptId(ehrApptId: string): void;
@@ -83,8 +83,8 @@ export declare class HeidiController {
         type?: 'PushNoteFailed';
     } | undefined): void;
     /**
-     * Triggered when the Heidi widget is closed.
-     * @param callback - a function called when the Heidi widget is closed.
+     * Triggered when the FDI widget is closed.
+     * @param callback - a function called when the FDI widget is closed.
      */
     static onClose(callback: () => void): void;
     /**
@@ -103,20 +103,20 @@ export declare class HeidiController {
      */
     static onRecordingStopped(callback: () => void): void;
     /**
-     * Triggered when the recording status changes in heidi widget
+     * Triggered when the recording status changes in fdi widget
      * @param callback
      */
-    static onRecordingStatusChange(callback: (status: HeidiRecordingStatus) => void): void;
+    static onRecordingStatusChange(callback: (status: FDIRecordingStatus) => void): void;
     /**
      * Triggered when a live transcription chunk is received during recording.
      * This callback is called every time an audio chunk is uploaded and transcribed,
      * providing real-time access to transcription text.
      * @param callback - a function called with transcription data when a chunk is transcribed
      */
-    static onLiveTranscription(callback: (transcription: HeidiLiveTranscription) => void): void;
+    static onLiveTranscription(callback: (transcription: FDILiveTranscription) => void): void;
     /**
-     * Triggered when the Heidi widget is opened.
-     * @param callback - a function called when the Heidi widget is opened.
+     * Triggered when the FDI widget is opened.
+     * @param callback - a function called when the FDI widget is opened.
      */
     static onOpen(callback: () => void): void;
     /**
@@ -128,10 +128,10 @@ export declare class HeidiController {
      * @param template - template for the current session
      * */
     static setTemplate(template: Template): void;
-    /** Set the sectional data heidiOptions
+    /** Set the sectional data fdiOptions
      * @param sectionalData - sectional data information for the current session
      * */
-    static setSectionalData(sectionalData: HeidiSectionalData): void;
+    static setSectionalData(sectionalData: FDISectionalData): void;
     /**
      * Start recording for the current session.
      */
@@ -147,7 +147,7 @@ export declare class HeidiController {
      * Sets the context for the current session
      * @param context
      */
-    static setContext(context: HeidiContext): void;
+    static setContext(context: FDIContext): void;
     /**
      * Refreshes the current session context attachments from server by invalidating cached data
      * @returns Promise that resolves when the session context attachments have been refreshed
@@ -164,7 +164,7 @@ export declare class HeidiController {
      */
     static startPendingAttachments(): void;
     /**
-     * Sets the callback for sending Heidi license to EHRs like Carestack
+     * Sets the callback for sending FDI license to EHRs like Carestack
      * @param callback
      */
     static onLicenseReady(callback: () => void): void;

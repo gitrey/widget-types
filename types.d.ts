@@ -4,14 +4,14 @@ import { CodeSystem, LanguageCode, Region } from '@/scribe-common/api/schema/sch
 import { type CustomTheme } from '@/utils/constant';
 import { type ReactNode } from 'react';
 import { z } from 'zod';
-import { type Heidi } from './index';
+import { type FDI } from './index';
 type NavigatorConnection = {
     type?: string;
     effectiveType?: string;
 };
 export type { Region };
-export type HeidiRecordingStatus = 'RECORDING' | 'NOT_STARTED' | 'PAUSED' | 'STOPPED';
-export interface HeidiLiveTranscription {
+export type FDIRecordingStatus = 'RECORDING' | 'NOT_STARTED' | 'PAUSED' | 'STOPPED';
+export interface FDILiveTranscription {
     /** The transcribed text from the audio chunk */
     text: string;
     /** Confidence score of the transcription (0-1) */
@@ -32,10 +32,10 @@ export type SessionDetails = {
 };
 declare global {
     interface Window {
-        Heidi: typeof Heidi;
-        heidiOptions: HeidiOptions;
-        heidiInstance: Heidi;
-        heidiInternals: HeidiInternals;
+        FDI: typeof FDI;
+        fdiOptions: FDIOptions;
+        fdiInstance: FDI;
+        fdiInternals: FDIInternals;
         webkitAudioContext: typeof AudioContext;
     }
     interface Navigator {
@@ -44,22 +44,22 @@ declare global {
         webkitConnection?: NavigatorConnection;
     }
 }
-export declare const enum HeidiFrameDragEvent {
-    HEIDI_FRAME_DRAG_START = "HEIDI_FRAME_DRAG_START",
-    HEIDI_FRAME_DRAG_MOUSEMOVE = "HEIDI_FRAME_DRAG_MOUSEMOVE",
-    HEIDI_FRAME_DRAG_END = "HEIDI_FRAME_DRAG_END"
+export declare const enum FDIFrameDragEvent {
+    FDI_FRAME_DRAG_START = "FDI_FRAME_DRAG_START",
+    FDI_FRAME_DRAG_MOUSEMOVE = "FDI_FRAME_DRAG_MOUSEMOVE",
+    FDI_FRAME_DRAG_END = "FDI_FRAME_DRAG_END"
 }
-export interface HeidiControl {
+export interface FDIControl {
     setRecorderVisibility: (visible: boolean) => void;
     close: (keepSession: boolean) => void;
     closeWithConfirmation: (keepSession: boolean) => void;
     setOnResizeCallback: (callback: (expanded: boolean) => void) => void;
-    setPushNoteCallback: (callback: (heidiNote: HeidiNote) => void) => void;
-    setPushDocumentCallback: (callback: (heidiNote: HeidiDocument) => void) => void;
+    setPushNoteCallback: (callback: (fdiNote: FDINote) => void) => void;
+    setPushDocumentCallback: (callback: (fdiNote: FDIDocument) => void) => void;
     setOnSessionStartedCallback: (callback: (sessionId: string) => void) => void;
     setOnTokenExpiredCallback: (callback: () => void) => void;
     setTemplate: (template: Template) => void;
-    setSectionalData: (sectionalData: HeidiSectionalData) => void;
+    setSectionalData: (sectionalData: FDISectionalData) => void;
     setOnCloseCallback: (callback: () => void) => void;
     setOnOpenCallback: (callback: () => void) => void;
     setToken: (token: string) => void;
@@ -68,12 +68,12 @@ export interface HeidiControl {
     setSessionByEhrApptId: (ehrApptId: string) => Promise<void>;
     setSessionDetails: (sessionDetails: SessionDetails) => void;
     setStartNewSession: (startNewSession: boolean) => void;
-    setContext: (context: HeidiContext) => void;
+    setContext: (context: FDIContext) => void;
     setOnRecordingStarted: (callback: () => void) => void;
     setOnRecordingPaused: (callback: () => void) => void;
     setOnRecordingStopped: (callback: () => void) => void;
-    setOnRecordingStatusChange: (callback: (status: HeidiRecordingStatus) => void) => void;
-    setOnLiveTranscriptionCallback: (callback: (transcription: HeidiLiveTranscription) => void) => void;
+    setOnRecordingStatusChange: (callback: (status: FDIRecordingStatus) => void) => void;
+    setOnLiveTranscriptionCallback: (callback: (transcription: FDILiveTranscription) => void) => void;
     setIsPushNoteDisabled: (isPushNoteDisabled: boolean, data: {
         reason: string;
         type?: 'PushNoteFailed';
@@ -84,7 +84,7 @@ export interface HeidiControl {
     refreshSession: () => Promise<void>;
     startPendingAttachments: () => void;
     /** Carestack specific */
-    setSendHeidiLicenseCallback: (callback: () => void) => void;
+    setSendFDILicenseCallback: (callback: () => void) => void;
     /** Zedmed specific */
     startRecording: () => void;
     stopRecording: (options?: {
@@ -111,7 +111,7 @@ export declare const LanguageOptionsSchema: z.ZodObject<{
     outputDefault?: LanguageCode;
 }>;
 export type ValidatedLanguageOptions = z.infer<typeof LanguageOptionsSchema>;
-export type HeidiTheme = 'light' | 'dark' | 'new';
+export type FDITheme = 'light' | 'dark' | 'new';
 export interface CustomizationOptions {
     pushNoteAction?: {
         label: string;
@@ -122,14 +122,14 @@ export interface CustomizationOptions {
         onAction: () => void;
     };
 }
-export interface HeidiOptions {
+export interface FDIOptions {
     dev?: boolean;
     region?: Region;
     displayLanguage?: LanguageCode;
     productName?: string;
     frame?: HTMLIFrameElement;
     language?: LanguageOptions;
-    theme?: HeidiTheme;
+    theme?: FDITheme;
     display?: DisplayOptions;
     result?: ResultOptions;
     /**
@@ -142,33 +142,33 @@ export interface HeidiOptions {
     target?: string | HTMLElement;
     onReady?: () => void;
     onInit?: () => void;
-    license?: HeidiLicenseInfo;
+    license?: FDILicenseInfo;
     customization?: CustomizationOptions;
-    extension?: HeidiExtensionOptions;
+    extension?: FDIExtensionOptions;
 }
-export interface HeidiLicenseInfo {
+export interface FDILicenseInfo {
     startDate: string;
     endDate: string;
     freeTrialDays: number;
     trialEndDate: string;
     latestTier: string;
 }
-export interface HeidiExtensionOptions {
+export interface FDIExtensionOptions {
     isActiveOnOtherTab?: boolean;
     enableMagicPaste?: boolean;
     enableInlineDictation?: boolean;
     enableSidepanel?: boolean;
     enableReplaceMagicPaste?: boolean;
 }
-export interface HeidiContext {
+export interface FDIContext {
     context: string;
     mode?: 'append' | 'overwrite';
 }
 /**
- * Zod schema for validating HeidiContext input
+ * Zod schema for validating FDIContext input
  * Ensures mode is either undefined, 'append', or 'overwrite'
  */
-export declare const HeidiContextSchema: z.ZodObject<{
+export declare const FDIContextSchema: z.ZodObject<{
     context: z.ZodString;
     mode: z.ZodOptional<z.ZodEnum<["append", "overwrite"]>>;
 }, "strip", z.ZodTypeAny, {
@@ -179,9 +179,9 @@ export declare const HeidiContextSchema: z.ZodObject<{
     mode?: "append" | "overwrite";
 }>;
 /**
- * Type inferred from Zod schema (should match HeidiContext)
+ * Type inferred from Zod schema (should match FDIContext)
  */
-export type ValidatedHeidiContext = z.infer<typeof HeidiContextSchema>;
+export type ValidatedFDIContext = z.infer<typeof FDIContextSchema>;
 export interface Section {
     section_id: string;
     section_name: string;
@@ -268,11 +268,11 @@ export interface SectionOutput {
     section_name: string;
     content: string;
 }
-export type HeidiSectionalData = {
+export type FDISectionalData = {
     enabled: boolean;
     availableSections: Array<Section>;
 };
-export type HeidiClinicalCoding = {
+export type FDIClinicalCoding = {
     enabled: boolean;
     codeSystems?: Array<CodeSystemUnit>;
 };
@@ -288,11 +288,11 @@ export interface ResultOptions {
      * This enriches the payload with standardized medical codes for diagnoses and procedures.
      */
     includeClinicalCoding?: boolean;
-    sectionalData?: HeidiSectionalData;
-    clinicalCoding?: HeidiClinicalCoding;
+    sectionalData?: FDISectionalData;
+    clinicalCoding?: FDIClinicalCoding;
 }
 export interface DisplayOptions {
-    theme?: HeidiTheme;
+    theme?: FDITheme;
     customTheme?: CustomTheme;
     fitToWindow?: boolean;
     expandable?: boolean;
@@ -313,12 +313,12 @@ export interface DisplayOptions {
      */
     disableManualPatientInput?: boolean;
 }
-export type HeidiState = 'READY' | 'DESTROYED';
-export interface HeidiInternals {
+export type FDIState = 'READY' | 'DESTROYED';
+export interface FDIInternals {
     baseUrl: string;
-    options: HeidiOptions;
-    control: HeidiControl;
-    state: HeidiState;
+    options: FDIOptions;
+    control: FDIControl;
+    state: FDIState;
     created: boolean;
 }
 export type ClinicalCodeUnit = {
@@ -330,7 +330,7 @@ export type ClinicalCodesSchema = Array<{
     primaryCode: ClinicalCodeUnit;
     similarCodes?: Array<ClinicalCodeUnit>;
 }>;
-export interface HeidiNote {
+export interface FDINote {
     patientInfo?: PatientInfo;
     transcript?: string;
     noteData?: string | Template;
@@ -341,7 +341,7 @@ export interface HeidiNote {
     };
     observations?: CustomisedTemplateResponse;
 }
-export interface HeidiDocument {
+export interface FDIDocument {
     patientInfo?: PatientInfo;
     title: string;
     content: string;
@@ -401,7 +401,7 @@ export type PatientInfo = {
     gender?: GenderType;
     dob?: string;
 };
-export interface HeidiOpenParams {
+export interface FDIOpenParams {
     template?: Template;
     patient?: PatientInfo;
     sessionId?: string;
